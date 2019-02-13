@@ -7,18 +7,15 @@ jmp $ ; loop
 
 welcome:
     pusha
-    loop:
-        mov al, [si]
-        cmp al,0
-        jne print
-        popa
-        ret
-    
-    print:
-        mov ah,0x0e ;function number = 0Eh : Display Character
-        int 0x10 ;BIOS video service
-        add si,1
-        jmp loop
+    lodsb    
+    or al,al
+    jz .finish 
+    mov ah,0x0e ;function number = 0Eh : Display Character
+    int 0x10 ;BIOS video service 
+    jmp welcome
+
+.finish:
+    ret
 
 str: db 'Welcome!',0
 
