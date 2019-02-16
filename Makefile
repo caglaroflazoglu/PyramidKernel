@@ -1,9 +1,8 @@
 build:
-	nasm -fbin boot.asm -o boot.bin
+	nasm -f elf32 kernel_start.asm -o kernel_start.o
+	gcc -m32 -c kernel.c -o kernel.o
+	ld -m elf_i386 -T link.ld -o kernel kernel_start.o kernel.o
 start:
-	qemu-system-x86_64 -fda  boot.bin
-iso:
-	truncate boot.bin -s 1200k
-	mkisofs -o pyramid.iso -b boot.bin ./
+	qemu-system-i386 -kernel kernel
 clean:
-	rm boot.bin pyramid.iso
+	rm kernel_start.o kernel.o kernel
