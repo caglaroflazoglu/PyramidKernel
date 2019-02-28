@@ -1,11 +1,22 @@
-build:
-	nasm -f elf32 kernel_start.asm -o kernel_start.o
-	gcc -m32 -c kernel.c -o kernel.o
-	ld -m elf_i386 -T link.ld -o kernel kernel_start.o kernel.o
-start:
-	qemu-system-i386 -kernel kernel
+ASM=nasm
+ASMFLAGS=-felf32
+CC=gcc
+CCFLAGS=-m32 -c -fno-stack-protector
+LD=ld
+LDFLAGS=-melf_i386
+
+all:
+	mkdir -p obj
+	mkdir -p dist
+	$(ASM) $(ASMFLAGS) kernel/kernel_start.asm -o obj/kernel_start.o
+	$(CC) $(CCFLAGS) kernel/kernel.c -o obj/kernel.o
+	$(LD) $(LDFLAGS) -T link.ld -o dist/kernel obj/kernel_start.o obj/kernel.o
+
 iso:
 	cp kernel iso_root/boot/
 	grub-mkrescue iso_root -o PyramidKernel.iso
+run:
+	qemu-system-i386 -kernel dist/kernel
+
 clean:
-	rm kernel_start.o kernel.o kernel PyramidKernel.iso
+	rm -rf obj/ dist/
