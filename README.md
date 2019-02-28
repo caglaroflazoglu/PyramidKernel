@@ -7,7 +7,7 @@ make
 ```
 ### Run in QEMU:
 ```
-make start
+make run
 ```
 ### Compile to ISO
 ```
