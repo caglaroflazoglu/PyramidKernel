@@ -13,7 +13,7 @@ all:
 	$(LD) $(LDFLAGS) -T link.ld -o dist/kernel obj/kernel_start.o obj/kernel.o
 
 iso:
-	cp kernel iso_root/boot/
+	cp dist/kernel iso_root/boot/
 	grub-mkrescue iso_root -o PyramidKernel.iso
 run:
 	qemu-system-i386 -kernel dist/kernel
