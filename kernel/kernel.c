@@ -4,7 +4,7 @@
 #include "../lib/stdio.h"
 
 void main(){
-    clear_screen();
+    clean_screen();
     print("Welcome to PyramidKernel!\n");
     next_line();
     new_prompt();
