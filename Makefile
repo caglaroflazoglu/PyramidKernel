@@ -16,4 +16,4 @@ iso:
 run:
 	qemu-system-i386 -kernel dist/kernel
 clean:
-	rm -rf obj/ dist/ iso_root/boot/kernel
+	rm -rf obj/ dist/ iso_root/boot/kernel PyramidKernel.iso

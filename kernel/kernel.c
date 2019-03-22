@@ -1,8 +1,10 @@
 #include "../lib/keyboard_map.h"
 #include "../lib/kernel/tty.h"
 #include "../lib/stdio.h"
+#include "../lib/gdt.h"
 
 void main(){
+    gdt_install();
     clearScreen();
     print("Welcome to PyramidKernel!\n");
     next_line();
