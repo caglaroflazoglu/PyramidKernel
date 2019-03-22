@@ -15,5 +15,7 @@ iso:
 	grub-mkrescue iso_root -o PyramidKernel.iso
 run:
 	qemu-system-i386 -kernel dist/kernel
+bochs:
+	bochs -q -f bochs_config
 clean:
-	rm -rf obj/ dist/ iso_root/boot/kernel PyramidKernel.iso
+	rm -rf obj/ dist/ iso_root/boot/kernel PyramidKernel.iso bochslog.txt
