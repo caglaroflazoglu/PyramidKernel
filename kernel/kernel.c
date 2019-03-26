@@ -2,6 +2,7 @@
 #include "../lib/kernel/tty.h"
 #include "../lib/stdio.h"
 #include "../lib/gdt.h"
+#include "../lib/idt.h"
 
 void main(){
     gdt_install();

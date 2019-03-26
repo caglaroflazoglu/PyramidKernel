@@ -1,6 +1,11 @@
+#define termColor 0x4; // red color for text
+#define LINES 25
+#define COLUMNS 80
+#define BYTES_PER_VID_ELEMENT 2
+#define SCREENSIZE BYTES_PER_VID_ELEMENT * COLUMNS * LINES
+
 char *vgaBuffer=(char *)0xb8000; // VGA text buffer is located at physical memory address 0xB8000.
 unsigned int video_loc=0; //  video character location
-#define termColor 0x4; // red color for text
 
 void clearScreen(){
     // VGA mode 3 provides a text interface 80 characters wide and 25 characters lines per screen.
@@ -35,6 +40,29 @@ void print(const char *string){
 
 }
 
+void update_cursor_graphic() {
+    unsigned int i = 1;
+    while (i < SCREENSIZE) {
+        if (vidptr[i] == 0x70) {
+            vidptr[i] = 0x07;
+        }
+        i += 2;
+    }
+    vidptr[current_loc + 1] = 0x70;
+}
 
+void scroll() {
+    int offset = 2 * COLUMNS * BYTES_PER_VID_ELEMENT;
 
+    for (int va = 0; va < SCREENSIZE; va++) {
+        if (va + offset < SCREENSIZE) {
+            char temp = vidptr[va + offset];
+            vidptr[va] = temp;
+        } else {
+            vidptr[va] = (va % 2 == 0 ? ' ' : 0x07);
+        }
+    }
 
+    //Move cursor up by the offset
+    current_loc -= (current_loc - offset >= 0 ? offset : current_loc);
+}
