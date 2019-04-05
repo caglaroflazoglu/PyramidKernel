@@ -8,6 +8,7 @@
 #define INTERRUPT_GATE 0x8e
 #define KERNEL_CODE_SEGMENT_OFFSET 0x08
 #define ENTER_KEY_CODE 0x1C
+#define PROMPT_LENGTH 16 // Length of the string "Pyramid@Kernel~$" is 16.
 
 extern unsigned char keyboard_map[128];
 extern void keyboard_handler(void);
@@ -63,6 +64,10 @@ void keyboard_init(void) {
     write_port(0x21 , 0xFD);
 }
 
+int index(const unsigned int index) {
+    return index/2 % COLUMNS;
+}
+
 void keyboard_handler_main(void) {
     unsigned char status;
     char keycode;
@@ -81,6 +86,17 @@ void keyboard_handler_main(void) {
             new_prompt();
             return;
         }
+
+        if (keycode == 14) { // Backspace
+            if (index(current_loc) > PROMPT_LENGTH) {
+                current_loc -= 2;
+                vidptr[current_loc] = ' ';
+                vidptr[current_loc + 1] = 0x07;
+            }
+            update_cursor_graphic();
+            return;
+        }
+
         vidptr[current_loc++] = keyboard_map[(unsigned char) keycode];
         vidptr[current_loc++] = 0x07;
     }
