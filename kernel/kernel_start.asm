@@ -1,15 +1,22 @@
-[BITS 32]
-MAGIC equ 0x1badb002
-FLAGS equ 0x00
-CHECKSUM equ (0-(MAGIC+FLAGS))
+[BITS 32]			 ;All instructions should be 32-bit.
 
-section .text
-	align 4
-	dd MAGIC
-	dd FLAGS
-	dd CHECKSUM
+section .multiboot_header
+header_start:
+  dd 0xe85250d6                ; magic number
+  dd 0                         ; protected mode code
+  dd header_end - header_start ; header length
 
-global start
+  ; checksum
+  dd 0x100000000 - (0xe85250d6 + 0 + (header_end - header_start))
+
+  ; required end tag
+  dw 0  ; type
+  dw 0  ; flags
+  dd 8  ; size
+header_end:
+
+
+global start	;Kernel entry point
 global keyboard_handler
 global read_port
 global write_port
@@ -34,7 +41,7 @@ write_port:
 load_idt:
 	mov	edx, [esp + 4]
 	lidt [edx]
-	sti               		  	;turn on interrupts
+	sti 	;turn on interrupts
 	ret
 
 keyboard_handler:
@@ -42,7 +49,7 @@ keyboard_handler:
 	iretd
 
 start:
-	cli
+	cli 	;Disable interrupts.
 	mov esp, stack_area
 	call main
 	hlt
