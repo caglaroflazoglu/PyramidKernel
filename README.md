@@ -17,3 +17,7 @@ make iso
 ```
 qemu-system-i386 -cdrom PyramidKernel.iso
 ```
+### Bochs
+```
+make bochs
+```
