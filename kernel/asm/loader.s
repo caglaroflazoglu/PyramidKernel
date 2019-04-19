@@ -1,14 +1,19 @@
-[BITS 32]		;All instructions should be 32-bit.
-
-global start	;Kernel entry point
+global loader
 extern main
 
-start:
-	cli 		;Disable interrupts.
-	mov esp, stack_area
-	call main
-	hlt
+%define debug xchg bx, bx
+
+section .text
+loader:
+  mov esp, kernel_stack + KERNEL_STACK_SIZE   ; set up stack pointer
+  push ebx
+  call main
+.loop:
+  jmp .loop
+
+KERNEL_STACK_SIZE equ 4096
 
 section .bss
-	resb 8192	;8KB for stack
-	stack_area:
+align 4
+kernel_stack:
+  resb KERNEL_STACK_SIZE

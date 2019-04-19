@@ -1,4 +1,4 @@
-OBJECTS = loader.o descriptors.o input_output.o multiboot.o
+OBJECTS = interrupt.o input_output.o loader.o descriptors.o multiboot.o
 ASM=nasm
 ASMFLAGS=-felf32
 
