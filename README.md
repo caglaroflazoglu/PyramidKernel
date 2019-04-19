@@ -12,15 +12,15 @@ In order to build PyramidKernel, make sure to have the following installed:
 
 ### Build
 ```
+./build.sh
+```
+### Compile to ISO
+```
 make
 ```
 ### Run in QEMU:
 ```
 make run
-```
-### Compile to ISO
-```
-make iso
 ```
 ### Bochs
 ```
