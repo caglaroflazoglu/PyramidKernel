@@ -13,96 +13,118 @@
 static unsigned int fb_col = 0;
 static unsigned int fb_row = 0;
 
-void fb_write_cell(short i, char c, unsigned char fg, unsigned char bg) {
+void write_cell(short i, char c, unsigned char fg, unsigned char bg) {
   unsigned char *fb = FB_CHAR_PTR;
   fb[i*2] = c;
   fb[i*2 + 1] = ((bg & 0x0f) << 4) | (fg & 0x0f);
 }
 
-void fb_move_cursor(unsigned short pos) {
+void move_cursor(unsigned short pos) {
   outb(FB_COMMAND_PORT, FB_HIGH_BYTE_COMMAND);
   outb(FB_DATA_PORT, ((pos >> 8) & 0x00FF));
   outb(FB_COMMAND_PORT, FB_LOW_BYTE_COMMAND);
   outb(FB_DATA_PORT, pos & 0x00FF);
 }
 
-void fb_newline() {
+void newline() {
   if (fb_row < FB_HEIGHT-1)
   // have room to add new line without scrolling
     fb_row++;
   else
   // must scroll down to add the new line
-    fb_scroll_down();
+    scroll_down();
 
   fb_col = 0;
-  fb_move_cursor(fb_col + (fb_row * FB_WIDTH));
+  move_cursor(fb_col + (fb_row * FB_WIDTH));
 }
 
 // advances cursor forward one character
-void fb_advance_pos() {
+void advance_pos() {
   if (fb_col < FB_WIDTH-1)
     // have room to advance cursor in this row
     fb_col++;
   else
     // wrap around cursor to the start of the next line
-    fb_newline();
+    newline();
 
-  fb_move_cursor(fb_col + (fb_row * FB_WIDTH));
+  move_cursor(fb_col + (fb_row * FB_WIDTH));
 }
 
-void fb_back_pos() {
+void back_pos() {
     if (fb_col == 0){
         if(fb_row == 0) return;
         // We go up a row if we're in the first column
         // and not in the first row
         fb_col = FB_WIDTH - 1;
         fb_row--;
-    } else {
-        //
-        fb_col--;
-    }
-    fb_move_cursor(fb_col + (fb_row * FB_WIDTH));
+    } 
+    else 
+      fb_col--;
+    
+    move_cursor(fb_col + (fb_row * FB_WIDTH));
 }
 
-void fb_write(char *buf, unsigned int len) {
-  unsigned int i;
+void write(char *buf, unsigned int len) {
   uint16_t pos;
-  for (i=0; i<len; i++) {
+  for(unsigned int i=0; i<len; i++) {
     char c = buf[i];
     if (c == '\n' || c == '\r') {
-      fb_newline();
+      newline();
     } else {
       pos = fb_col + (fb_row * FB_WIDTH);
-      fb_write_cell(pos, c, FB_WHITE, FB_BLACK);
-      fb_advance_pos();
+      write_cell(pos, c, FB_WHITE, FB_BLACK);
+      advance_pos();
     }
   }
 }
 
-void fb_write_str(char *buf) {
-  fb_write(buf, strlen(buf));
+
+void init_prompt(){
+  const char *prompt = "\nPyramid@Kernel~$ "; 
+  uint16_t pos;
+  for (unsigned int i=0; i<18; i++) {
+    char c = prompt[i];
+    if (c == '\n') 
+      newline();
+    else {
+      pos = fb_col + (fb_row * FB_WIDTH);
+      write_cell(pos, c, 3, FB_BLACK);
+      advance_pos();
+    }
+  }
 }
 
-void fb_clear() {
+void welcome_text(){
+  printf(" ____                            _     _ _  __                    _ \n");
+  printf("|  _ \\ _   _ _ __ __ _ _ __ ___ (_) __| | |/ /___ _ __ _ __   ___| |\n");
+  printf("| |_) | | | | '__/ _` | '_ ` _ \\| |/ _` | ' // _ \\ '__| '_ \\ / _ \\ |\n");
+  printf("|  __/| |_| | | | (_| | | | | | | | (_| | . \\  __/ |  | | | |  __/ |\n");
+  printf("|_|    \\__, |_|  \\__,_|_| |_| |_|_|\\__,_|_|\\_\\___|_|  |_| |_|\\___|_|\n");
+  printf("       |___/\n");
+  return;
+} 
+
+void write_str(char *buf) {
+  write(buf, strlen(buf));
+}
+
+void clear_screen() {
   fb_col = 0;
   fb_row = 0;
 
-  int i;
-  for (i=0; i<FB_WIDTH*FB_HEIGHT; i++) {
-    fb_write_cell(i, ' ', FB_WHITE, FB_BLACK);
-  }
-  fb_move_cursor(0);
+  for(int i=0; i<FB_WIDTH*FB_HEIGHT; i++) 
+    write_cell(i, ' ', FB_WHITE, FB_BLACK);
+  
+  move_cursor(0);
 }
 
-void fb_clear_row(uint8_t row) {
-  size_t i;
-  for (i=0; i<FB_WIDTH; i++) {
-    fb_write_cell((row*FB_WIDTH)+i, ' ', FB_WHITE, FB_BLACK);
-  }
+void clear_row(uint8_t row) {
+  for (size_t i=0; i<FB_WIDTH; i++)
+    write_cell((row*FB_WIDTH)+i, ' ', FB_WHITE, FB_BLACK);
 }
 
-void fb_scroll_down() {
+void scroll_down() {
   uint16_t *fb = FB_UINT16_PTR;
   memmove(fb, fb+FB_WIDTH, FB_WIDTH*2*(FB_HEIGHT*2-1));
-  fb_clear_row(FB_HEIGHT-1);
+  clear_row(FB_HEIGHT-1);
 }

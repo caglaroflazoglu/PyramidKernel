@@ -9,9 +9,10 @@
 #include "isr.h"
 
 void main() {
-   fb_clear();
-   init_descriptor_tables();
-   printf("Pyramid@Kernel~$");
-   init_keyboard();
-   return;
+	clear_screen();
+	init_descriptor_tables();
+	welcome_text();   
+	init_prompt();
+	init_keyboard();
+	return;
 }

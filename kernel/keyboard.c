@@ -16,11 +16,6 @@ static void keyboard_cb();
 
 extern unsigned char keyboard_map[128];
 
-void new_prompt(void) {
-    const char *prompt = "\nPyramid@Kernel~$";
-    printf(prompt);
-}
-
 static void keyboard_cb() {
   unsigned char scan_code = inb(KBD_DATA_PORT);
   unsigned char keycode = keyboard_map[scan_code];
@@ -36,11 +31,11 @@ static void keyboard_cb() {
           return;
       } else if(keycode == 174) {
           // Left arrow key
-          fb_back_pos();
+          back_pos();
           return;
       } else if(keycode == 175) {
           // Right arrow key
-          fb_advance_pos();
+          advance_pos();
           return;
       }
       /*
@@ -60,7 +55,7 @@ static void keyboard_cb() {
       }
 
       if(keycode == 0x0A) {
-          new_prompt();
+          init_prompt();
       }
       else{
         printf("%c", keycode);

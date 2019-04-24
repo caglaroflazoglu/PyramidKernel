@@ -100,13 +100,15 @@ void *memmove(void *dst, const void *src, size_t len) {
 }
 
 void strupper(char *str){
-    for(int i = 0; i < strlen(str); i++)
-        if(str[i] >= 'a' && str[i] < 'z') str[i] = str[i] & 0x4F;
+  for(unsigned int i = 0; i < strlen(str); i++)
+    if(str[i] >= 'a' && str[i] < 'z') 
+      str[i] = str[i] & 0x4F;
 }
 
 void strlower(char *str){
-    for(int i = 0; i < strlen(str); i++)
-      if(str[i] >= 'A' && str[i] < 'Z') str[i] = str[i] | 0x60;
+    for(unsigned int i = 0; i < strlen(str); i++)
+      if(str[i] >= 'A' && str[i] < 'Z') 
+        str[i] = str[i] | 0x60;
 }
 
 int printf(const char *format, ...) {
@@ -126,31 +128,31 @@ int printf(const char *format, ...) {
         case 'i':
           val = va_arg(ap, int);
           itoa(val, buf, 10);
-          fb_write_str(buf);
+          write_str(buf);
           break;
         case 'x':
           uval = va_arg(ap, uint32_t);
           uitoa(uval, buf, 16);
-          fb_write_str(buf);
+          write_str(buf);
           break;
         case 'd':
           uval = va_arg(ap, uint32_t);
           uitoa(uval, buf, 10);
-          fb_write_str(buf);
+          write_str(buf);
           break;
         case 'c':
           c = (char)va_arg(ap, int);
-          fb_write(&c, 1);
+          write(&c, 1);
           break;
         case 's':
           s = va_arg(ap, char*);
-          fb_write_str(s);
+          write_str(s);
           break;
         default:
-          fb_write((char*)format+i, 1);
+          write((char*)format+i, 1);
       }
     } else {
-      fb_write((char*)format+i, 1);
+      write((char*)format+i, 1);
     }
   }
 

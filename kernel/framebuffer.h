@@ -27,24 +27,29 @@
  * Content: | ASCII                 | FG      | BG      |
  *
  */
-void fb_write_cell(short i, char c, unsigned char fg, unsigned char bg);
+void write_cell(short i, char c, unsigned char fg, unsigned char bg);
 
 // Moves cursor foward in the framebuffer
-void fb_move_cursor(unsigned short pos);
+void move_cursor(unsigned short pos);
 
 // Moves cursor forwards or backwards a single cell
-void fb_advance_pos();
-void fb_back_pos();
+void advance_pos();
+void back_pos();
 
 // Writes C string to framebuffer and advances cursor 
-void fb_write(char *buf, unsigned int len);
-void fb_write_str(char *buf);
+void write(char *buf, unsigned int len);
+void write_str(char *buf);
+
+//initialize prompt
+void init_prompt();
+void welcome_text();
 
 // clear the screen
-void fb_clear();
-void fb_clear_row(uint8_t row);
+void clear_screen();
+void clear_row(uint8_t row);
 
 // scroll down one row
-void fb_scroll_down();
-void fb_newline();
+void scroll_down();
+void newline();
+
 #endif
