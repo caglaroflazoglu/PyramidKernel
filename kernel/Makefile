@@ -9,3 +9,4 @@ all:
 	$(CC) $(CCFLAGS) string.c -o string.o
 	$(CC) $(CCFLAGS) descriptor_tables.c -o descriptor_tables.o
 	$(CC) $(CCFLAGS) isr.c -o isr.o
+	$(CC) $(CCFLAGS) heap.c -o heap.o
