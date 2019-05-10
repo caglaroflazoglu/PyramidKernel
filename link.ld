@@ -5,8 +5,8 @@ ENTRY(loader)
 kernel_start = .;
 
 SECTIONS {
-  
-  .boot :
+
+  .boot ALIGN (0x1000):
   {
     *(.multiboot_header)
   }
