@@ -1,9 +1,10 @@
 // Based (loosely) on code from Bran's kernel development tutorials.
+
 #include <stdbool.h>
 #include <cpuid.h>
 
 #include "descriptor_tables.h"
-#include "string.h"
+#include "../lib/string.h"
 #include "io.h"
 
 // Internal use only
@@ -131,6 +132,8 @@ static inline bool are_interrupts_enabled(){
     return flags & (1 << 9);
 }
 
+
+
 static void init_idt() {
 
   idt_ptr.limit = sizeof(idt_entry_t) * 256 - 1;
@@ -200,6 +203,7 @@ static void init_idt() {
   // enable hardware interrupts
   asm volatile ("sti");
 }
+
 
 
 static inline void io_wait() {

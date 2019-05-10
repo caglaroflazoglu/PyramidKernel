@@ -2,27 +2,31 @@
 
 #ifndef __DESCRIPTOR_TABLES_H__
 #define __DESCRIPTOR_TABLES_H__
+
 #include <stdint.h>
+
 
 //Reserved bits in IDT/GDT entries
 #define IDT_FLAG_RESERVED                             0x0E
+
+
 //GDT FIELDS
 #define GDT_BASE                                      0x00000000
 #define GDT_LIMIT                                     0xFFFFFFFF
 
-/* - GDT granularity - */
-// SEGLEN field (segment length)
+//GDT granularity
+  // SEGLEN field (segment length)
 #define GDT_SEGMENT_LENGTH                            0xF
-// D field (operand size)
+  // D field (operand size)
 #define GDT_OPERAND_SIZE_16                           0
 #define GDT_OPERAND_SIZE_32                           1
- // G field (grandularity)
+  // G field (grandularity)
 #define GDT_GRANULARITY_1K                            0
 #define GDT_GRANULARITY_4K                            1
 
-/* - GDT access - */
-// TYPE field (type)
-// (3.4.5.1 of Intel 64 and IA-32 Architectures Developer's Manual)
+//GDT access
+  // TYPE field (type)
+  // (3.4.5.1 of Intel 64 and IA-32 Architectures Developer's Manual)
 #define GDT_DATA_TYPE_READ_ONLY                       0x0
 #define GDT_DATA_TYPE_READ_ONLY_ACCESSED              0x1
 #define GDT_DATA_TYPE_READ_WRITE                      0x2
@@ -39,15 +43,15 @@
 #define GDT_CODE_TYPE_EXEC_CONFORMING_ACCESSED        0xD
 #define GDT_CODE_TYPE_EXEC_READ_CONFORMING            0xE
 #define GDT_CODE_TYPE_EXEC_READ_CONFORMING_ACCESSED   0xF
-// DT field (descriptor type)
+  // DT field (descriptor type)
 #define GDT_SYSTEM_DESCRIPTOR                         0
 #define GDT_CODE_AND_DATA_DESCRIPTOR                  1
-// DPL field (which ring)
+  // DPL field (which ring)
 #define GDT_RING0                                     0
 #define GDT_RING1                                     1
 #define GDT_RING2                                     2
 #define GDT_RING3                                     3
-// P field (present)
+  // P field (present)
 #define GDT_SEGMENT_NOT_PRESENT                       0
 #define GDT_SEGMENT_PRESENT                           1
 
@@ -60,12 +64,15 @@
 #define PIC2_DATA       (PIC2+1)
 #define PIC1_START_INTERRUPT 0x20 /* Master PIC after remapping*/
 #define PIC2_START_INTERRUPT 0x28 /* Slave PIC after remapping*/
+
 #define PIC_EOI         0x20    /* End-of-interrupt command code */
+
 #define ICW1_ICW4       0x01    /* ICW4 (not) needed */
 #define ICW1_SINGLE     0x02    /* Single (cascade) mode */
 #define ICW1_INTERVAL4  0x04    /* Call address interval 4 (8) */
 #define ICW1_LEVEL      0x08    /* Level triggered (edge) mode */
 #define ICW1_INIT       0x10    /* Initialization - required! */
+
 #define ICW4_8086       0x01    /* 8086/88 (MCS-80/85) mode */
 #define ICW4_AUTO       0x02    /* Auto (normal) EOI */
 #define ICW4_BUF_SLAVE  0x08    /* Buffered mode/slave */
@@ -73,7 +80,10 @@
 #define ICW4_SFNM       0x10    /* Special fully nested (not) */
 
 
-/* - Global Descriptor Tables - */
+// ---------------------------
+// Global Descriptor Tables
+// ---------------------------
+
 /**  Access portion of GDT entry.
  *   | 0...3 | 4 | 5... 6 | 7 |
  *   |  Type | DT|   DPL  | P |
@@ -135,7 +145,14 @@ typedef struct gdt_ptr gdt_ptr_t;
 
 void init_descriptor_tables();
 
-/* - Interrupt Descriptor Tables - */
+
+
+
+
+// ---------------------------
+// Interrupt Descriptor Tables
+// ---------------------------
+
 /** This structure contains the access flags of an IDT entry.
  *  | 0 ... 4 | 5...6 | 7 |
  *  |RESERVED |  DPL  | P |
@@ -174,6 +191,7 @@ struct idt_ptr {
   idt_entry_t *base;
 } __attribute__((packed));
 typedef struct idt_ptr idt_ptr_t;
+
 
 extern void isr0();
 extern void isr1();

@@ -3,8 +3,8 @@
 #include "keyboard.h"
 #include "isr.h"
 #include "io.h"
-#include "string.h"
-#include "framebuffer.h"
+#include "../lib/string.h"
+#include "../lib/framebuffer.h"
 #include "keyboard_map.h"
 
 #define KBD_DATA_PORT 0x60
@@ -13,7 +13,6 @@ int capsLock = 0;
 int shiftDown = 0;
 
 static void keyboard_cb();
-
 extern unsigned char keyboard_map[128];
 
 static void keyboard_cb() {

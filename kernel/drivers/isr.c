@@ -1,8 +1,8 @@
 // based loosely on http://www.jamesmolloy.co.uk/tutorial_html/4.-The%20GDT%20and%20IDT.html
 #include <stdint.h>
 #include "isr.h"
-#include "string.h"
-#include "framebuffer.h"
+#include "../lib/string.h"
+#include "../lib/framebuffer.h"
 #include "io.h"
 
 #define PIC1            0x20    /* IO base address for master PIC */
@@ -29,7 +29,8 @@ void isr_handler(registers_t regs) {
 void ack_irq(int int_no) {
   // Send an EOI (end of interrupt) signal to the PICs.
   // If this interrupt involved the slave.
-  if (int_no >= 40){
+  if (int_no >= 40)
+  {
      // Send reset signal to slave.
      outb(PIC2_COMMAND, PIC_EOI);
   }
