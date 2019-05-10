@@ -1,12 +1,11 @@
-CC=gcc
-CCFLAGS=-m32 -c -fno-stack-protector -ffreestanding -O2 -Wall -Wextra
+OBJECTS = kernel_main.o										 
+CC = gcc
+CFLAGS = -m32 -fno-stack-protector \
+					-ffreestanding \
+					-Wall -Wextra -g -c # -Werror
 
-all:
-	$(CC) $(CCFLAGS) keyboard.c -o keyboard.o
-	$(CC) $(CCFLAGS) serial.c -o serial.o
-	$(CC) $(CCFLAGS) framebuffer.c -o framebuffer.o
-	$(CC) $(CCFLAGS) kernel_main.c -o kernel_main.o
-	$(CC) $(CCFLAGS) string.c -o string.o
-	$(CC) $(CCFLAGS) descriptor_tables.c -o descriptor_tables.o
-	$(CC) $(CCFLAGS) isr.c -o isr.o
-	$(CC) $(CCFLAGS) heap.c -o heap.o
+all:$(OBJECTS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) $< -o $@
+
