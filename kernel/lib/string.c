@@ -4,6 +4,14 @@
 #include "string.h"
 #include "framebuffer.h"
 
+int32_t strcmp(const int8_t *s1, const int8_t *s2) {
+  while ((*s1) && (*s1 == *s2)) {
+    s1++;
+    s2++;
+  }
+  return (*(uint8_t *)s1 - *(uint8_t *)s2);
+}
+
 char *itoa(int val, char *buf, int radix) {
   uint32_t i = 0;
   uint32_t start = i;
