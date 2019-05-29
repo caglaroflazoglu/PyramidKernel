@@ -1,4 +1,4 @@
-OBJECTS = keyboard.o serial.o isr.o descriptor_tables.o syscall.o
+OBJECTS = keyboard.o serial.o isr.o descriptor_tables.o shellcmds.o
 
 CC = gcc
 CFLAGS = -m32 -fno-stack-protector \
