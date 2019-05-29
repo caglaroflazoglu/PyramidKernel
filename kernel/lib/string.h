@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-int32_t strcmp(const int8_t *s1, const int8_t *s2);
+int32_t strcmp(const char *s1, const char *s2);
 char *itoa(int val, char *buf, int radix);
 char *uitoa(uint32_t val, char *buf, int radix);
 size_t strlen(const char *buf);

@@ -4,7 +4,7 @@
 #include "string.h"
 #include "framebuffer.h"
 
-int32_t strcmp(const int8_t *s1, const int8_t *s2) {
+int32_t strcmp(const char *s1, const char *s2) {
   while ((*s1) && (*s1 == *s2)) {
     s1++;
     s2++;
