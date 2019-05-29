@@ -1,5 +1,5 @@
-#ifndef __FRAMEBUFFER_H__
-#define __FRAMEBUFFER_H__
+#ifndef __SHELL_H__
+#define __SHELL_H__
 
 #include <stdint.h>
 

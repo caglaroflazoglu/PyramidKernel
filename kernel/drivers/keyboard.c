@@ -4,7 +4,7 @@
 #include "isr.h"
 #include "io.h"
 #include "../lib/string.h"
-#include "../lib/framebuffer.h"
+#include "../lib/shell.h"
 #include "keyboard_map.h"
 
 #include "shellcmds.h"

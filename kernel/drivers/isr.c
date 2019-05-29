@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include "isr.h"
 #include "../lib/string.h"
-#include "../lib/framebuffer.h"
+#include "../lib/shell.h"
 #include "io.h"
 
 #define PIC1            0x20    /* IO base address for master PIC */

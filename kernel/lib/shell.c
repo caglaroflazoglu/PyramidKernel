@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-#include "framebuffer.h"
+#include "shell.h"
 #include "string.h"
 #include "../drivers/io.h"
 

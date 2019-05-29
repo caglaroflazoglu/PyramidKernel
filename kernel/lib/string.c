@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdarg.h>
 #include "string.h"
-#include "framebuffer.h"
+#include "shell.h"
 
 int32_t strcmp(const char *s1, const char *s2) {
   while ((*s1) && (*s1 == *s2)) {
