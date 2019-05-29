@@ -3,9 +3,9 @@
 #include "framebuffer.h"
 #include "string.h"
 #include "../drivers/io.h"
+
 // A convenient define which gives a char ptr to the frame buffer
 #define FB_CHAR_PTR ((unsigned char *) FB_BASE_ADDRESS)
-
 // A define that gives us uint16 ptr to the frame buffer.
 // Cells are 2 bytes wide (16 bits) so this makes indexing more natural.
 #define FB_UINT16_PTR ((uint16_t *) FB_BASE_ADDRESS)
@@ -28,10 +28,10 @@ void move_cursor(unsigned short pos) {
 
 void newline() {
   if (fb_row < FB_HEIGHT-1)
-  // have room to add new line without scrolling
+    // have room to add new line without scrolling
     fb_row++;
   else
-  // must scroll down to add the new line
+    // must scroll down to add the new line
     scroll_down();
 
   fb_col = 0;
@@ -53,8 +53,8 @@ void advance_pos() {
 void back_pos() {
     if (fb_col == 0){
         if(fb_row == 0) return;
-        // We go up a row if we're in the first column
-        // and not in the first row
+        /* We go up a row if we're in the first column
+           and not in the first row*/
         fb_col = FB_WIDTH - 1;
         fb_row--;
     } 
@@ -77,7 +77,6 @@ void write(char *buf, unsigned int len) {
     }
   }
 }
-
 
 void init_prompt(){
   const char *prompt = "\nPyramid@Kernel~$ "; 
