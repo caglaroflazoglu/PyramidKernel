@@ -31,6 +31,10 @@ static void keyboard_cb() {
     }
   }
   else{
+    if(keycode == 0x08){
+      back_space();
+    }
+
     if(keycode == 0x0A) {
       if(!strcmp(command,"help")){
         printf("\nhelp - Print this text\n");

@@ -51,17 +51,18 @@ void advance_pos() {
 }
 
 void back_pos() {
-    if (fb_col == 0){
-        if(fb_row == 0) return;
-        /* We go up a row if we're in the first column
-           and not in the first row*/
-        fb_col = FB_WIDTH - 1;
-        fb_row--;
-    } 
-    else 
-      fb_col--;
-    
-    move_cursor(fb_col + (fb_row * FB_WIDTH));
+  if (fb_col == 0){
+    if(fb_row == 0) 
+      return;
+    /* We go up a row if we're in the first column
+       and not in the first row*/
+    fb_col = FB_WIDTH - 1;
+    fb_row--;
+  } 
+  else 
+    fb_col--;
+  
+  move_cursor(fb_col + (fb_row * FB_WIDTH));
 }
 
 void write(char *buf, unsigned int len) {
@@ -126,4 +127,14 @@ void scroll_down() {
   uint16_t *fb = FB_UINT16_PTR;
   memmove(fb, fb+FB_WIDTH, FB_WIDTH*2*(FB_HEIGHT*2-1));
   clear_row(FB_HEIGHT-1);
+}
+
+void back_space(){
+  uint16_t pos;
+  char c = ' ';
+
+  fb_col--;
+  pos = fb_col + (fb_row * FB_WIDTH);
+  write_cell(pos, c, FB_WHITE, FB_BLACK);
+  back_pos();
 }

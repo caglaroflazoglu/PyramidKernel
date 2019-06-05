@@ -52,6 +52,7 @@ void move_cursor(unsigned short pos);
 
 // Moves cursor forwards 
 void advance_pos();
+void back_space();
 
 // Writes C string to framebuffer and advances cursor 
 void write(char *buf, unsigned int len);
