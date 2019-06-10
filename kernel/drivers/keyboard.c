@@ -13,12 +13,19 @@ static void keyboard_cb();
 extern unsigned char keyboard_map[128];
 
 char command[512]; // max 512 bytes in a command
+char temp[512];
 int cmd_index = 0;
 int shiftDown = 0;
 
+// clear command
 void clear_command(void) {
   for (int i = 0; i < 512; i++)
-    command[i] = 0; // clear command
+    command[i] = 0; 
+}
+
+void clear_temp(void) {
+  for (int i = 0; i < 512; i++)
+    temp[i] = 0; 
 }
 
 static void keyboard_cb() {
@@ -31,11 +38,21 @@ static void keyboard_cb() {
     }
   }
   else{
+    // Backspace keycode
     if(keycode == 0x08){
+      cmd_index--;
+           
+      for (int i = 0; i < cmd_index; ++i)
+        temp[i]=command[i];
+      clear_command();
+      for (int i = 0; i < cmd_index; ++i)
+        command[i]=temp[i]; 
+
+      clear_temp();
       back_space();
     }
-
-    if(keycode == 0x0A) {
+    // Enter keycode
+    else if(keycode == 0x0A) {
       if(!strcmp(command,"help")){
         printf("\nhelp - Print this text\n");
         printf("reboot - Reboot the kernel");

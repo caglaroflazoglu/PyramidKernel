@@ -136,5 +136,5 @@ void back_space(){
   fb_col--;
   pos = fb_col + (fb_row * FB_WIDTH);
   write_cell(pos, c, FB_WHITE, FB_BLACK);
-  back_pos();
+  move_cursor(fb_col + (fb_row * FB_WIDTH));
 }
