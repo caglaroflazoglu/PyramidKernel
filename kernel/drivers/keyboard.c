@@ -40,6 +40,11 @@ static void keyboard_cb() {
   else{
     // Backspace keycode
     if(keycode == 0x08){
+      if (cmd_index <= 0){
+        // if we're at the first character of the command
+        // then avoid backspace to not to delete prompt.
+        return;
+      }
       cmd_index--;
            
       for (int i = 0; i < cmd_index; ++i)

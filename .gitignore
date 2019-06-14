@@ -1,0 +1,9 @@
+# ignore elf files.
+*.elf
+
+# ignore iso files
+*.iso
+
+# ignore build files.
+*.s
+*.o
