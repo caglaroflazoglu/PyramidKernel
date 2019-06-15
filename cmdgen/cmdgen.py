@@ -137,14 +137,7 @@ def generate_header(commands):
         handler.write(" ")
         handler.write(command.metadata.command)
         handler.write("(")
-
-        args = ""
-        for arg in getattr(command.metadata, "args", ()):
-            args += arg["type"]
-            args += " "
-            args += arg["name"]
-            args += ", "
-        handler.write(args)
+        handler.write(", ".join(f"{arg.type} {arg.name}" for arg in getattr(command.metadata, "args", ())))
         handler.write(")")
         handler.write(";")
         handler.nl()

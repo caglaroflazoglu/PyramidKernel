@@ -57,3 +57,21 @@ void uname(){
     */
     printf("\nPyramidKernel v1");
 }
+
+void sleep(int seconds){
+    /*
+    {
+        "annotation": "command",
+        "command": "sleep",
+        "help": "Sleeps given amount of seconds",
+        "rettype": "void",
+        "args": [
+            {
+                "name": "seconds", 
+                "type": "int"
+            }
+        ]
+    }        
+    */
+    printf("sleeping");
+}
