@@ -7,3 +7,4 @@
 # ignore build files.
 *.s
 *.o
+bochslog.txt
