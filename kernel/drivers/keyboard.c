@@ -58,14 +58,23 @@ static void keyboard_cb() {
     }
     // Enter keycode
     else if(keycode == 0x0A) {
-      if(!strcmp(command,"help")){
-        printf("\nhelp - Print this text\n");
-        printf("reboot - Reboot the kernel");
+      /*
+          {
+              "annotation": "handler"
+          }
+      */
+      /* start of generated code */
+      if(!strcmp(command, "help")){
+         printf("\nreboot: Reboots the system");
+         printf("\nuname: Shows system information");
       }
-
-      else if(!strcmp(command,"reboot")){
-        reboot();
+      else if(!strcmp(command, "reboot")){
+         reboot();
       }
+      else if(!strcmp(command, "uname")){
+         uname();
+      }
+      /* end of generated code */
 
       cmd_index=0;
       clear_command();

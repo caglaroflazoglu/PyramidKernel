@@ -2,5 +2,6 @@
 #define __SHELLCMDS_H__
 
 void reboot(); 
+void uname();
 
 #endif
