@@ -1,3 +1,4 @@
+python3.7 cmdgen/cmdgen.py kernel/
 mkdir -p obj/ 
 make -C kernel/asm
 cp kernel/asm/*.o obj/

@@ -20,6 +20,13 @@
 #define check_flag(flags, n) ((flags) & bit(n))
 
 void reboot(){
+    /*
+    {
+        "annotation": "command",
+        "command": "reboot",
+        "help": "Reboots the system"
+    }
+    */
     uint8_t temp;
     asm volatile ("cli"); /* disable all interrupts */
  
@@ -34,4 +41,15 @@ void reboot(){
 loop:
     asm volatile ("hlt"); /* if that didn't work, halt the CPU */
     goto loop; /* if a NMI is received, halt again */
+}
+
+void uname(){
+    /*
+    {
+        "annotation": "command",
+        "command": "uname",
+        "help": "Shows system information"
+    }        
+    */
+    printf("\nPyramidKernel v1");
 }
