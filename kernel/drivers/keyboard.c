@@ -67,6 +67,7 @@ static void keyboard_cb() {
       if(!strcmp(command, "help")){
          printf("\nreboot: Reboots the system");
          printf("\nuname: Shows system information");
+         printf("\nsleep: Sleeps given amount of seconds");
       }
       else if(!strcmp(command, "reboot")){
          reboot();

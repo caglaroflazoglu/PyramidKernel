@@ -24,7 +24,9 @@ void reboot(){
     {
         "annotation": "command",
         "command": "reboot",
-        "help": "Reboots the system"
+        "help": "Reboots the system",
+        "rettype": "void",
+        "args": []
     }
     */
     uint8_t temp;
@@ -48,8 +50,29 @@ void uname(){
     {
         "annotation": "command",
         "command": "uname",
-        "help": "Shows system information"
+        "help": "Shows system information",
+        "rettype": "void",
+        "args": []
     }        
     */
     printf("\nPyramidKernel v1");
+}
+
+void sleep(int seconds){
+    /*
+    {
+        "annotation": "command",
+        "command": "sleep",
+        "help": "Sleeps given amount of seconds",
+        "rettype": "void",
+        "args": [
+            {
+                "name": "seconds", 
+                "type": "int"
+            }
+        ],
+        "disabled": true
+    }        
+    */
+    printf("sleeping");
 }
