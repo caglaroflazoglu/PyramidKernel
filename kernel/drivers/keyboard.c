@@ -75,9 +75,6 @@ static void keyboard_cb() {
       else if(!strcmp(command, "uname")){
          uname();
       }
-      else if(!strcmp(command, "sleep")){
-         sleep();
-      }
       /* end of generated code */
 
       cmd_index=0;

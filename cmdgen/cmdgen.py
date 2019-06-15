@@ -137,7 +137,12 @@ def generate_header(commands):
         handler.write(" ")
         handler.write(command.metadata.command)
         handler.write("(")
-        handler.write(", ".join(f"{arg.type} {arg.name}" for arg in getattr(command.metadata, "args", ())))
+        handler.write(
+            ", ".join(
+                f"{arg.type} {arg.name}"
+                for arg in getattr(command.metadata, "args", ())
+            )
+        )
         handler.write(")")
         handler.write(";")
         handler.nl()
@@ -164,6 +169,14 @@ def main(start_path):
             command=command
         )
         for command in commands
+    )
+
+    commands = tuple(
+        filter(
+            lambda command: not hasattr(command.metadata, "disabled")
+            or not command.metadata.disabled,
+            commands,
+        )
     )
     handler_impl = generate_handler(commands, help_message).getvalue()
     for handler in handlers:

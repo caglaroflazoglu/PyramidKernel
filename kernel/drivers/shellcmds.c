@@ -70,7 +70,8 @@ void sleep(int seconds){
                 "name": "seconds", 
                 "type": "int"
             }
-        ]
+        ],
+        "disabled": true
     }        
     */
     printf("sleeping");
